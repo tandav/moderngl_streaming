@@ -6,9 +6,10 @@ import contextlib
 def ffmpeg():
     cmd = (
         'ffmpeg', '-y',
+        '-hwaccel', 'videotoolbox',
+        '-threads', '16',
 
-        '-re',
-
+        # '-re',
 
         '-i', 'skyrim.mp3',
 
@@ -17,15 +18,21 @@ def ffmpeg():
         # '-pix_fmt', 'rgba',
         '-pix_fmt', 'rgb24',
         '-r', str(config.fps),  # input framrate
+        # '-thread_queue_size', '128',
+        '-thread_queue_size', '1024',
         '-i', '-',  # read video from the stdin
 
-        '-c:v', 'libx264',
+        # '-c:v', 'libx264',
+        '-c:v', 'h264_videotoolbox',
+
         '-pix_fmt', 'yuv420p',
 
         '-vsync', 'cfr',
-        '-b:v', '3m',
+        '-b:a', '320k',
+        # '-b:v', '5M',
+        '-b:v', '12M',
         '-deinterlace',
-        '-r', str(config.fps),  # output framerate
+        '-r', str(config.fps), # output framerate
         # f'/tmp/benchmark/{fname}.mp4',
 
         '-f', 'flv',

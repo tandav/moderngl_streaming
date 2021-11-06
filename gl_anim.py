@@ -61,10 +61,16 @@ with sink.ffmpeg() as ff:
     # for _ in range(30):
     while True:
         x = np.linspace(-1.0, 1.0, n)
-        y = np.random.rand(n) - 0.5
-        r = np.ones(n)
-        g = np.zeros(n)
-        b = np.ones(n)
+        y = np.random.uniform(-1.0, 1.0, size=n)
+        # y = np.random.random(n)
+
+        # r = np.ones(n)
+        # g = np.zeros(n)
+        # b = np.ones(n)
+
+        r = np.random.random(n)
+        g = np.random.random(n)
+        b = np.random.random(n)
         vertices = np.dstack([x, y, r, g, b])
 
         # print(len(vertices.astype('f4').tobytes()))
@@ -73,11 +79,12 @@ with sink.ffmpeg() as ff:
 
         # vbo.write()
 
-        # vao.render(moderngl.TRIANGLES)
-        vao.render(moderngl.LINE_STRIP)
+        vao.render(moderngl.TRIANGLES)
+        # vao.render(moderngl.LINE_STRIP)
 
         ff.write(fbo.read())
-        buffer.clear()
+        ctx.clear()
+        # buffer.clear()
         # print(fbo.read())
 
 # Image.frombytes('RGB', fbo.size, fbo.read(), 'raw', 'RGB', 0, -1).show()
