@@ -1,7 +1,6 @@
 import moderngl
 import numpy as np
 
-from PIL import Image
 
 ctx = moderngl.create_standalone_context()
 
@@ -66,21 +65,19 @@ with sink.ffmpeg() as ff:
         r = np.ones(n)
         g = np.zeros(n)
         b = np.ones(n)
-
         vertices = np.dstack([x, y, r, g, b])
 
         # print(len(vertices.astype('f4').tobytes()))
-
         # vbo = ctx.buffer(vertices.astype('f4').tobytes())
         buffer.write(vertices.astype('f4').tobytes())
-        buffer.clear()
+
         # vbo.write()
 
         # vao.render(moderngl.TRIANGLES)
         vao.render(moderngl.LINE_STRIP)
-        im = Image.frombytes('RGB', fbo.size, fbo.read(), 'raw', 'RGB', 0, -1)
-        # ff.write(fbo.read())
-        ff.write(im.tobytes())
+
+        ff.write(fbo.read())
+        buffer.clear()
         # print(fbo.read())
 
 # Image.frombytes('RGB', fbo.size, fbo.read(), 'raw', 'RGB', 0, -1).show()
