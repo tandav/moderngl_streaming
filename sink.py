@@ -6,8 +6,6 @@ import contextlib
 def ffmpeg():
     cmd = (
         'ffmpeg', '-y',
-        '-hwaccel', 'videotoolbox',
-        '-threads', '16',
 
         # '-re',
 
