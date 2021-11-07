@@ -38,7 +38,7 @@ def ffmpeg():
         'rtmp://a.rtmp.youtube.com/live2/u0x7-vxkq-6ym4-s4qk-0acg'
     )
 
-    _ffmpeg = subprocess.Popen(cmd, stdin=subprocess.PIPE)
-    yield _ffmpeg.stdin
-    _ffmpeg.communicate()
-    _ffmpeg.wait()
+    p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
+    yield p.stdin
+    p.communicate()
+    p.wait()
